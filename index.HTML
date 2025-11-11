@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 7 - Mad Lib</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.6; }
+    h1 { text-align: center; }
+    form, .result { max-width: 450px; margin: 1rem auto; }
+    label { display: block; margin-top: 1rem; font-weight: bold; }
+    input { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px; }
+    button { margin-top: 1rem; padding: 0.6rem 1rem; background: #007BFF; border: none; color: white; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    .result { margin-top: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; }
+    footer { margin-top: 2rem; text-align: center; color: #555; font-size: 0.9rem; }
+    section.addendum { max-width: 700px; margin: 3rem auto; border-top: 1px solid #ccc; padding-top: 1.5rem; }
+    section.addendum h2 { font-size: 1.3rem; color: #222; }
+  </style>
+</head>
+<body>
+
+  <h1>Lab 7: Mad Lib Generator</h1>
+  <p style="text-align:center;">Fill in the blanks below and click "Create Story" to generate your Mad Lib!</p>
+
+  <form id="madLibForm">
+    <label>Your Name:
+      <input type="text" id="name" required />
+    </label>
+    <label>Place:
+      <input type="text" id="place" required />
+    </label>
+    <label>Animal:
+      <input type="text" id="animal" required />
+    </label>
+    <label>Favorite Food:
+      <input type="text" id="food" required />
+    </label>
+    <label>Hobby:
+      <input type="text" id="hobby" required />
+    </label>
+    <button type="submit">Create Story</button>
+  </form>
+
+  <div class="result" id="storyResult" style="display:none;"></div>
+
+  <!-- ✅ Addendum Section -->
+  <section class="addendum">
+    <h2>Addendum – Process & Design Explanation</h2>
+    <p>
+      This Mad Lib webpage was developed using basic <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>. 
+      The goal was to generate a simple, interactive story without using any server-side code such as ExpressJS <code>POST</code> routes. 
+      Instead, all form data is processed directly in the browser using JavaScript.
+    </p>
+    <p>
+      When the user fills in the five text fields—name, place, animal, food, and hobby—and clicks the “Create Story” button, 
+      an event listener intercepts the form submission, prevents the default page reload, 
+      and dynamically builds a short story using the values entered. 
+      The result is then displayed on the same page inside a styled result box.
+    </p>
+    <p>
+      The page design emphasizes clarity and readability through centered layout, soft borders, and responsive spacing. 
+      A footer script automatically shows the <em>last modified</em> date of the file, satisfying the lab’s submission requirements. 
+      This approach demonstrates how a small amount of JavaScript can provide interactive behavior 
+      even without the need for a backend server or database connection.
+    </p>
+  </section>
+
+  <footer>
+    <p>Last updated: <span id="lastModified"></span></p>
+  </footer>
+
+  <script>
+    // Footer last modified date
+    var x = document.lastModified;
+    document.getElementById('lastModified').textContent = x;
+
+    // Mad Lib generator
+    const form = document.getElementById('madLibForm');
+    const resultDiv = document.getElementById('storyResult');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // stop form reload
+
+      const name = document.getElementById('name').value;
+      const place = document.getElementById('place').value;
+      const animal = document.getElementById('animal').value;
+      const food = document.getElementById('food').value;
+      const hobby = document.getElementById('hobby').value;
+
+      const story = `
+        Once upon a time, <b>${name}</b> went to <b>${place}</b> with a <b>${animal}</b>.
+        They enjoyed eating <b>${food}</b> while spending time doing <b>${hobby}</b>.
+        It was truly a day to remember!
+      `;
+
+      resultDiv.innerHTML = `<h2>Your Story</h2><p>${story}</p>`;
+      resultDiv.style.display = "block";
+    });
+  </script>
+
+</body>
+</html>
